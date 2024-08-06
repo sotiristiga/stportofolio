@@ -25,11 +25,13 @@ def metrics_customize(red,green,blue,iconname,sline,i):
                         margin-top: 0;'>{sline}</style></span></p>"""
     return htmlstr
   
-ME= pd.read_csv(f"https://raw.githubusercontent.com/sotiristiga/Tiganitas_Sotiris_portofolio/main/ME_2023_2024.csv")
-ME['Started']=pd.to_datetime(ME['Started'],dayfirst=True)
-ME['Expired']=pd.to_datetime(ME['Expired'],dayfirst=True)
+ME = pd.read_csv(f"https://raw.githubusercontent.com/sotiristiga/Tiganitas_Sotiris_portofolio/main/ME_2023_2024.csv")
 
-ME['Year']=ME['Started'].dt.year
+ME['Started'] = pd.to_datetime(ME['Started'], dayfirst=True)
+ME['Expired'] = pd.to_datetime(ME['Expired'], dayfirst=True)
+
+ME['Year'] = ME['Started'].dt.year
+ME['Year'] =pd.Categorical(ME['Year'],categories=pd.Series([2023,2024]))
 month_levels = pd.Series([
   "January", "February", "March", "April", "May", "June", 
   "July", "August", "September", "October", "November", "December"
