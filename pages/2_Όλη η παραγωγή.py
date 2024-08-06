@@ -43,7 +43,7 @@ IM['Category']=IM['Category'].replace("ΠΡΟΣΩΠΙΚΟ ΑΤΥΧΗΜΑ (ΟΧΗ
 IM['Category']=IM['Category'].replace("ΟΔΙΚΗ ΒΟΗΘΕΙΑ","ΟΔΙΚΗΣ ΒΟΗΘΕΙΑΣ")
 IM['Category']=IM['Category'].replace("ΝΟΜΙΚΗ ΠΡΟΣΤΑΣΙΑ","ΝΟΜΙΚΗΣ ΠΡΟΣΤΑΣΙΑΣ")
 IM['Category']=IM['Category'].replace("ΣΚΑΦΗ","ΣΚΑΦΩΝ")
-IM_select=IM[['N_Policy', 'Company', 'Category', 'Char', 'Started', 'Expired','District', 'City', 'Gross', 'Net', 'Commissions', 'id','Platform']]
+IM_select=IM[['N_Policy', 'Company', 'Category', 'Char', 'Started', 'Expired','District', 'Gross', 'Net', 'Commissions', 'id','Platform']]
 
 All=pd.concat([ME,IM_select])
 All['District'].value_counts().reset_index().sort_values('District')
