@@ -24,7 +24,9 @@ def metrics_customize(red,green,blue,iconname,sline,i):
                         </style><BR><span style='font-size: 22px; 
                         margin-top: 0;'>{sline}</style></span></p>"""
     return htmlstr
-  
+
+st.set_page_config(layout='wide', page_title="Megabroker")
+
 ME = pd.read_csv(f"https://raw.githubusercontent.com/sotiristiga/Tiganitas_Sotiris_portofolio/main/ME_2023_2024.csv")
 
 ME['Started'] = pd.to_datetime(ME['Started'], dayfirst=True)
