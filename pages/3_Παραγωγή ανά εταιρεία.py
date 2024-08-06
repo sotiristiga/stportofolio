@@ -105,7 +105,7 @@ with kpi4:
     st.markdown(lnk + metrics_customize(0,204,102,"fas fa-euro-sign","Προμήθειες",All2['Commissions'].sum().round(2)), unsafe_allow_html=True)
 
 with kpi5:
-    st.markdown(lnk + metrics_customize(0,204,102,"fas fa-percent","Ποσοστό Προμήθειας",((All2['Commissions'].sum()/All2['Net'].sum()).round(4)*100)), unsafe_allow_html=True)
+    st.markdown(lnk + metrics_customize(0,204,102,"fas fa-percent","Ποσοστό Προμήθειας",((All2['Commissions'].sum()/All2['Net'].sum()).round(3)*100)), unsafe_allow_html=True)
 
 
 
