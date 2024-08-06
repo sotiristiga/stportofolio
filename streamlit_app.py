@@ -32,6 +32,7 @@ IM['Started'] = pd.to_datetime(IM['Started'], dayfirst=True)
 IM['Expired'] = pd.to_datetime(IM['Expired'], dayfirst=True)
 
 IM['Year'] = IM['Started'].dt.year
+IM['Year'] = pd.Categorical(IM['Year'],categories=pd.Series([2023,2024])
 month_levels = pd.Series([
     "January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
