@@ -329,7 +329,7 @@ with tab3:
     prod_line_by_month_mean_count['Month'] = pd.Categorical(prod_line_by_month_mean_count['Month'], categories=month_levels)
     prod_line_by_year=prod_line_by_month.groupby('Year')[['Commissions',"Net"]].sum().reset_index()
     prod_line_by_year_count=prod_line_by_month_count.groupby('Year')['count'].sum().reset_index()
-    prod_line_by_year_count['Year']=pd.Categorical(prod_line_by_year_count['Year'],pd.Series([2015,2016,2017,2018,2019,2020,2021,2022,2023]))
+    prod_line_by_year_count['Year']=pd.Categorical(prod_line_by_year_count['Year'],pd.Series([2023,2024]))
     tab31, tab32, tab33 = st.tabs(["Σύνολο Συμβολαίων", "Καθαρά", "Προμήθειες"])
     with tab31:
         tabs311,tabs312=st.tabs(["Σύνολικα","Σύγκριση ανά πλατφόρμα"])
@@ -347,7 +347,7 @@ with tab3:
             plat_count_by_year=All1[["Year","Platform"]].value_counts().reset_index()
             plat_count_by_year_bar = px.bar(plat_count_by_year, 
                             x="Year", y="count", color="Platform",barmode="group",
-                            title='Σύνολο συμβολαίων ανά έτος απο το 2020 έως 2023',
+                            title='Σύνολο συμβολαίων ανά έτος',
                             color_discrete_sequence= px.colors.sequential.Aggrnyl,
                             labels={'count':'Σύνολο συμβολαίων','Year':'Έτος','Platform':'Πλατφόρμα'},width=900,text_auto=True)
             plat_count_by_year_bar.update_traces(textfont_size=17, textangle=0, 
@@ -358,7 +358,7 @@ with tab3:
         with tabs313:  
             fig_line_polcou = px.line(prod_line_by_month_count, 
                             x="Month_Year", y="count", 
-                            title='Σύνολο συμβολαίων ανά μήνα απο το 2020 έως 2023',
+                            title='Σύνολο συμβολαίων ανά μήνα',
                             color_discrete_sequence= px.colors.sequential.Aggrnyl,
                             labels={'count':'Σύνολο συμβολαίων','Month_Year':'Μήνας-Έτος'},markers=True)
             fig_line_polcou.update_layout(plot_bgcolor='white',font_size=13)
@@ -369,7 +369,7 @@ with tab3:
             plat_count_by_year=plat_count_by_year.sort_values('Month_Year')  
             fig_line_plat_count_by_year = px.line(plat_count_by_year, 
                             x="Month_Year", y="count", color='Platform',
-                            title='Σύνολο συμβολαίων ανά μήνα απο το 2020 έως 2023',
+                            title='Σύνολο συμβολαίων ανά μήνα',
                             color_discrete_sequence= px.colors.sequential.Aggrnyl,
                             labels={'count':'Σύνολο συμβολαίων','Month_Year':'Μήνας-Έτος','Platform':'Πλατφόρμα'},markers=True)
             fig_line_plat_count_by_year.update_layout(plot_bgcolor='white',font_size=13)
@@ -378,7 +378,7 @@ with tab3:
         with tabs315:
             fig_line_polcou = px.line(prod_line_by_month_mean_count.sort_values('Month'), 
                             x="Month", y="count", 
-                            title='Σύνολο συμβολαίων ανά μήνα απο το 2020 έως 2023',
+                            title='Σύνολο συμβολαίων ανά μήνα',
                             color_discrete_sequence= px.colors.sequential.Aggrnyl,
                             labels={'count':'Σύνολο συμβολαίων','Month':'Μήνας'},markers=True)
             fig_line_polcou.update_layout(plot_bgcolor='white',font_size=13)
@@ -390,7 +390,7 @@ with tab3:
             plat_count_by_month=plat_count_by_month.sort_values('Month')              
             fig_line_plat_count_by_month = px.line(plat_count_by_month, 
                             x="Month", y="count", color='Platform',
-                            title='Σύνολο συμβολαίων ανά μήνα απο το 2020 έως 2023',
+                            title='Σύνολο συμβολαίων ανά μήνα',
                             color_discrete_sequence= px.colors.sequential.Aggrnyl,
                             labels={'count':'Σύνολο συμβολαίων','Month':'Μήνας','Platform':'Πλατφόρμα'},markers=True)
             fig_line_plat_count_by_month.update_layout(plot_bgcolor='white',font_size=13)
@@ -587,7 +587,7 @@ with tab5:
                             color_discrete_sequence= px.colors.sequential.Aggrnyl,
                             labels={'count':'# Συμβολαίων','Month':'Μήνας',"Duration_gr":'Διάρκεια συμβολαίου'},
                             width=1000,text='count')
-        fig_dur_bar.update_traces(textfont_size=17, textangle=0, textposition="outside", cliponaxis=False)
+        fig_dur_bar.update_traces(textfont_size=17, textangle=0, cliponaxis=False)
         fig_dur_bar.update_layout(plot_bgcolor='white',font_size=15)
         st.write(fig_dur_bar)
     with tabs54:        
@@ -598,7 +598,7 @@ with tab5:
                             color_discrete_sequence= px.colors.sequential.Aggrnyl,
                             labels={'count':'# Συμβολαίων','Month':'Μήνας',"Duration_gr":'Διάρκεια συμβολαίου','Platform':'Πλατφόρμα'},
                             width=1500,text='count',height=1200)
-        fig_dur_bar.update_traces(textfont_size=17, textangle=0, textposition="outside", cliponaxis=False)
+        fig_dur_bar.update_traces(textfont_size=17, textangle=0, cliponaxis=False)
         fig_dur_bar.update_layout(plot_bgcolor='white',font_size=15)
         st.write(fig_dur_bar)
     tabs55,tabs56=st.tabs(["Σύνολικα","Σύγκριση ανά πλατφόρμα"])
