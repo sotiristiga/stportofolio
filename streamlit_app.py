@@ -182,7 +182,7 @@ with tab3:
     prod_line_by_year = prod_line_by_month.groupby('Year')[['Commissions', "Net"]].sum().reset_index()
     prod_line_by_year_count = prod_line_by_month_count.groupby('Year')['count'].sum().reset_index()
     prod_line_by_year_count['Year'] = pd.Categorical(prod_line_by_year_count['Year'],
-                                                     pd.Series([2020, 2021, 2022, 2023]))
+                                                     pd.Series([2023,2024]))
     tab31, tab32, tab33 = st.tabs(["Σύνολο Συμβολαίων", "Καθαρά", "Προμήθειες"])
     with tab31:
         fig_line_polcou = px.bar(prod_line_by_year_count,
@@ -274,7 +274,7 @@ with tab4:
         fig_barplot_reg = px.bar(discrictcount, x='count', y='District', title='',
                                  labels={'count': 'Αρ. Πελατών', 'District': 'Νομός'},
                                  color_discrete_sequence=px.colors.sequential.Blugrn,
-                                 text_auto=True, width=1200, height=1200)
+                                 text_auto=True, width=1200, height=800)
         fig_barplot_reg.update_traces(textfont_size=14, textangle=0.5, textposition="outside", cliponaxis=False)
         fig_barplot_reg.update_layout(plot_bgcolor='white', font_size=25)
         st.write(fig_barplot_reg)
@@ -292,7 +292,7 @@ with tab4:
                                  title='',
                                  labels={'Commissions': 'Προμήθειες €', 'District': 'Νομός'},
                                  color_discrete_sequence=px.colors.sequential.Blugrn, text='Commissions',
-                                 width=1200, height=1200)
+                                 width=1200, height=800)
         fig_barplot_reg.update_traces(textfont_size=14, texttemplate='%{text:.3s} €', textangle=0.5,
                                       textposition="outside", cliponaxis=False)
         fig_barplot_reg.update_layout(plot_bgcolor='white', font_size=25)
@@ -301,8 +301,7 @@ with tab4:
 with tab5:
     select_durations = IM1.loc[
         (IM1['Duration'] == 1) | (IM1['Duration'] == 3) | (IM1['Duration'] == 6) | (IM1['Duration'] == 12)]
-    select_duration_total_year = \
-    (select_durations[['Duration_gr', 'Month', 'Year']].value_counts().reset_index()).groupby(['Year', "Duration_gr"])[
+    select_duration_total_year = (select_durations[['Duration_gr', 'Month', 'Year']].value_counts().reset_index()).groupby(['Year', "Duration_gr"])[
         'count'].sum().round(1).reset_index()
     fig_dur_bar = px.bar(select_duration_total_year,
                          x="Year", y="count",
@@ -310,7 +309,7 @@ with tab5:
                          color_discrete_sequence=px.colors.sequential.Aggrnyl,
                          labels={'count': '# Συμβολαίων', 'Year': 'Έτος', "Duration_gr": 'Διάρκεια συμβολαίου'},
                          width=700, text='count')
-    fig_dur_bar.update_traces(textfont_size=17, textangle=0, textposition="outside", cliponaxis=False)
+    fig_dur_bar.update_traces(textfont_size=17, textangle=0,  cliponaxis=False)
     fig_dur_bar.update_layout(plot_bgcolor='white', font_size=15)
     st.write(fig_dur_bar)
 
@@ -324,7 +323,7 @@ with tab5:
                          color_discrete_sequence=px.colors.sequential.Aggrnyl,
                          labels={'count': '# Συμβολαίων', 'Month': 'Μήνας', "Duration_gr": 'Διάρκεια συμβολαίου'},
                          width=1000, text='count')
-    fig_dur_bar.update_traces(textfont_size=17, textangle=0, textposition="outside", cliponaxis=False)
+    fig_dur_bar.update_traces(textfont_size=17, textangle=0,  cliponaxis=False)
     fig_dur_bar.update_layout(plot_bgcolor='white', font_size=15)
     st.write(fig_dur_bar)
     select_duration_mean = (select_durations[['Duration_gr', 'Month', 'Year']].value_counts().reset_index()).groupby(['Month', "Duration_gr"])[
