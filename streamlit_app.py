@@ -46,7 +46,7 @@ IM['Year'] = pd.Categorical(IM['Year'])
 IM['Month_Year'] = IM["Started"].dt.strftime('%m-%Y')
 IM['District'] = IM['District'].replace("ΑΙΤΩΛΟΑΚΑΡΝΑΝΙΑΣ", "ΑΙΤΩΛΟΑΚΑΡΝΑΝΙΑ")
 IM['District'] = IM['District'].replace("ΔΩΔΕΚΑΝΗΣΟΥ", "ΔΩΔΕΚΑΝΗΣΩΝ")
-
+IM['District']=IM['District'].replace('ΚΑΛΛΙΘΕΑ','ΑΤΤΙΚΗΣ')
 
 
 
@@ -64,8 +64,7 @@ def duration_groups(duration):
 
 
 
-IM['Duration'] = (
-            (IM['Expired'].dt.year - IM['Started'].dt.year) * 12 + IM['Expired'].dt.month - IM['Started'].dt.month + IM[
+IM['Duration'] = ((IM['Expired'].dt.year - IM['Started'].dt.year) * 12 + IM['Expired'].dt.month - IM['Started'].dt.month + IM[
         'Expired'].dt.day / 30 - IM['Started'].dt.day / 30).round(0)
 IM['Duration_gr'] = IM['Duration'].apply(duration_groups)
 duration_levels = pd.Series(["Ετήσιο", "Εξάμηνο", "Τρίμηνο", "Μηνιαίο", "Άλλη"])
@@ -102,7 +101,7 @@ with tab1:
     tab11, tab12, tab13 = st.tabs(["Σύνολο Συμβολαίων", "Καθαρά", "Προμήθειες"])
     with tab11:
         companies_countpol = IM1['Company'].value_counts().reset_index()
-        fig_barplot = px.bar(companies_countpol, x='count', y='Company', title='',
+        fig_barplot = px.bar(companies_countpol.sort_values('count'), x='count', y='Company', title='',
                              labels={'count': 'Σύνολο Συμβολαίων', 'Company': 'Ασφ. Εταιρεία'},
                              color_discrete_sequence=px.colors.sequential.Blugrn, text_auto=True,
                              height=1000)
@@ -136,7 +135,7 @@ with tab2:
     tab21, tab22, tab23 = st.tabs(["Σύνολο Συμβολαίων", "Καθαρά", "Προμήθειες"])
     with tab21:
         categories_countpol = IM1['Category'].value_counts().reset_index()
-        fig_barplot = px.bar(categories_countpol, x='count', y='Category', title='',
+        fig_barplot = px.bar(categories_countpol.sort_values('count'), x='count', y='Category', title='',
                              labels={'count': 'Σύνολο Συμβολαίων', 'Category': 'Κλάδος'},
                              color_discrete_sequence=px.colors.sequential.Blugrn,
                              text_auto=True)
@@ -187,7 +186,7 @@ with tab3:
     with tab31:
         fig_line_polcou = px.bar(prod_line_by_year_count,
                                  x="Year", y="count",
-                                 title='Σύνολο συμβολαίων ανά έτος απο το 2020 έως 2023',
+                                 title='Σύνολο συμβολαίων ανά έτος',
                                  color_discrete_sequence=px.colors.sequential.Aggrnyl,
                                  labels={'count': 'Σύνολο συμβολαίων', 'Year': 'Έτος'}, width=500, text_auto=True)
         fig_line_polcou.update_traces(textfont_size=17, textangle=0,
@@ -262,8 +261,6 @@ with tab3:
         st.write(fig_line_polcou)
 
 with tab4:
-    st.write(
-        """* Σε αρκετα συμβόλαια δεν αναγραφόταν το φύλο του πελάτη. Επίσης, σε κάποια συμβόλαια υπάρχει συνιδιοκτησία""")
     st.write("# Νομός")
 
     discrict_data = IM1.groupby(['id', 'District'])[['Gross', 'Net', 'Commissions']].sum().reset_index()
@@ -274,7 +271,7 @@ with tab4:
         fig_barplot_reg = px.bar(discrictcount, x='count', y='District', title='',
                                  labels={'count': 'Αρ. Πελατών', 'District': 'Νομός'},
                                  color_discrete_sequence=px.colors.sequential.Blugrn,
-                                 text_auto=True, width=1200, height=800)
+                                 text_auto=True, width=1000, height=400)
         fig_barplot_reg.update_traces(textfont_size=14, textangle=0.5, textposition="outside", cliponaxis=False)
         fig_barplot_reg.update_layout(plot_bgcolor='white', font_size=25)
         st.write(fig_barplot_reg)
@@ -282,7 +279,7 @@ with tab4:
         fig_barplot_reg = px.bar(discrict_data_total.sort_values('Net'), x='Net', y='District', title='',
                                  labels={'Net': 'Καθαρά €', 'District': 'Νομός'},
                                  color_discrete_sequence=px.colors.sequential.Blugrn, text='Net', width=1000,
-                                 height=1200)
+                                 height=400)
         fig_barplot_reg.update_traces(textfont_size=14, texttemplate='%{text:.2s} €', textangle=0.5,
                                       textposition="outside", cliponaxis=False)
         fig_barplot_reg.update_layout(plot_bgcolor='white', font_size=25)
@@ -292,7 +289,7 @@ with tab4:
                                  title='',
                                  labels={'Commissions': 'Προμήθειες €', 'District': 'Νομός'},
                                  color_discrete_sequence=px.colors.sequential.Blugrn, text='Commissions',
-                                 width=1200, height=800)
+                                 width=1000, height=400)
         fig_barplot_reg.update_traces(textfont_size=14, texttemplate='%{text:.3s} €', textangle=0.5,
                                       textposition="outside", cliponaxis=False)
         fig_barplot_reg.update_layout(plot_bgcolor='white', font_size=25)
@@ -336,6 +333,3 @@ with tab5:
                           width=1000, height=1000, markers=True)
     fig_dur_bar.update_layout(plot_bgcolor='white', font_size=15)
     st.write(fig_dur_bar)
-
-
-
