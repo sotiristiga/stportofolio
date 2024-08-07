@@ -581,6 +581,9 @@ with tab4:
     fig_barplot_reg.update_layout(plot_bgcolor='white', font_size=25)
     st.write(fig_barplot_reg)
 
+
+
+
 with tab5:
     select_durations = All1.loc[
         (All1['Duration'] == 1) | (All1['Duration'] == 3) | (All1['Duration'] == 6) | (All1['Duration'] == 12)]
