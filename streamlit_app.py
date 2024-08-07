@@ -262,39 +262,17 @@ with tab3:
 
 with tab4:
     st.write("# Νομός")
-
     discrict_data = IM1.groupby(['id', 'District'])[['Gross', 'Net', 'Commissions']].sum().reset_index()
     discrict_data_total = IM1.groupby(['District'])[['Gross', 'Net', 'Commissions']].sum().reset_index()
     discrictcount = discrict_data['District'].value_counts().reset_index().sort_values('count')
-    tab41, tab42, tab43 = st.tabs(["Σύνολο Συμβολαίων", "Καθαρά", "Προμήθειες"])
-    with tab41:
-        fig_barplot_reg = px.bar(discrictcount, x='count', y='District', title='',
+    fig_barplot_reg = px.bar(discrictcount, x='count', y='District', title='',
                                  labels={'count': 'Αρ. Πελατών', 'District': 'Νομός'},
                                  color_discrete_sequence=px.colors.sequential.Blugrn,
                                  text_auto=True, width=1000, height=400)
-        fig_barplot_reg.update_traces(textfont_size=14, textangle=0.5, textposition="outside", cliponaxis=False)
-        fig_barplot_reg.update_layout(plot_bgcolor='white', font_size=25)
-        st.write(fig_barplot_reg)
-    with tab42:
-        fig_barplot_reg = px.bar(discrict_data_total.sort_values('Net'), x='Net', y='District', title='',
-                                 labels={'Net': 'Καθαρά €', 'District': 'Νομός'},
-                                 color_discrete_sequence=px.colors.sequential.Blugrn, text='Net', width=1000,
-                                 height=400)
-        fig_barplot_reg.update_traces(textfont_size=14, texttemplate='%{text:.2s} €', textangle=0.5,
-                                      textposition="outside", cliponaxis=False)
-        fig_barplot_reg.update_layout(plot_bgcolor='white', font_size=25)
-        st.write(fig_barplot_reg)
-    with tab43:
-        fig_barplot_reg = px.bar(discrict_data_total.sort_values('Commissions'), x='Commissions', y='District',
-                                 title='',
-                                 labels={'Commissions': 'Προμήθειες €', 'District': 'Νομός'},
-                                 color_discrete_sequence=px.colors.sequential.Blugrn, text='Commissions',
-                                 width=1000, height=400)
-        fig_barplot_reg.update_traces(textfont_size=14, texttemplate='%{text:.3s} €', textangle=0.5,
-                                      textposition="outside", cliponaxis=False)
-        fig_barplot_reg.update_layout(plot_bgcolor='white', font_size=25)
-        fig_barplot.update_xaxes(tickprefix="€")
-        st.write(fig_barplot_reg)
+    fig_barplot_reg.update_traces(textfont_size=14, textangle=0.5, textposition="outside", cliponaxis=False)
+    fig_barplot_reg.update_layout(plot_bgcolor='white', font_size=25)
+    st.write(fig_barplot_reg)
+    
 with tab5:
     select_durations = IM1.loc[
         (IM1['Duration'] == 1) | (IM1['Duration'] == 3) | (IM1['Duration'] == 6) | (IM1['Duration'] == 12)]
