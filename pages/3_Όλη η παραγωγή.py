@@ -25,6 +25,7 @@ def metrics_customize(red, green, blue, iconname, sline, i):
     return htmlstr
 
 
+
 st.set_page_config(layout='wide', page_title="Όλη η παραγωγή")
 ME = pd.read_csv(f"https://raw.githubusercontent.com/sotiristiga/Tiganitas_Sotiris_portofolio/main/ME_2023_2024.csv")
 IM = pd.read_csv(f"https://raw.githubusercontent.com/sotiristiga/Tiganitas_Sotiris_portofolio/main/IM_2023_2024.csv")
