@@ -29,7 +29,8 @@ st.set_page_config(layout='wide', page_title="Όλη η παραγωγή")
 ME = pd.read_csv(f"https://raw.githubusercontent.com/sotiristiga/Tiganitas_Sotiris_portofolio/main/ME_2023_2024.csv")
 IM = pd.read_csv(f"https://raw.githubusercontent.com/sotiristiga/Tiganitas_Sotiris_portofolio/main/IM_2023_2024.csv")
 ANY = pd.read_csv(f"https://raw.githubusercontent.com/sotiristiga/Tiganitas_Sotiris_portofolio/main/ANY.csv")
-
+ANY['Started'] = pd.to_datetime(ANY['Started'], dayfirst=True)
+ANY['Expired'] = pd.to_datetime(ANY['Expired'], dayfirst=True)
 IM['Platform'] = "Insurance Market"
 ME['Platform'] = "Megabroker"
 ANY['Platform'] = "Interamerican"
