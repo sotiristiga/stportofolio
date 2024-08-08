@@ -29,6 +29,11 @@ def metrics_customize(red, green, blue, iconname, sline, i):
 st.set_page_config(layout='wide', page_title="Παραγώγη ανα εταιρεία")
 ME = pd.read_csv(f"https://raw.githubusercontent.com/sotiristiga/Tiganitas_Sotiris_portofolio/main/ME_2023_2024.csv")
 IM = pd.read_csv(f"https://raw.githubusercontent.com/sotiristiga/Tiganitas_Sotiris_portofolio/main/IM_2023_2024.csv")
+ANY = pd.read_csv(f"https://raw.githubusercontent.com/sotiristiga/Tiganitas_Sotiris_portofolio/main/ANY.csv")
+ANY['Started'] = pd.to_datetime(ANY['Started'], dayfirst=True)
+ANY['Expired'] = pd.to_datetime(ANY['Expired'], dayfirst=True)
+ANY['Platform'] = "Interamerican"
+ANY['District']='None'
 IM['Platform'] = "Insurance Market"
 ME['Platform'] = "Megabroker"
 ME['District'] = ME['District'].replace("ΑΙΤΩΛΟΑΚΑΡΝΑΝΙΑΣ", "ΑΙΤΩΛΟΑΚΑΡΝΑΝΙΑ")
@@ -49,7 +54,7 @@ IM_select = IM[
     ['N_Policy', 'Company', 'Category', 'Char', 'Started', 'Expired', 'District', 'Gross', 'Net', 'Commissions', 'id',
      'Platform']]
 
-All = pd.concat([ME, IM_select])
+All = pd.concat([ME, IM_select,ANY])
 All['District'].value_counts().reset_index().sort_values('District')
 All['Started'] = pd.to_datetime(All['Started'], dayfirst=True)
 All['Expired'] = pd.to_datetime(All['Expired'], dayfirst=True)
@@ -514,7 +519,7 @@ with tab2:
 with tab3:
     client_dis_count = All2[['District', "id"]].value_counts().reset_index().groupby('District').count().reset_index()
     st.write("### Νομοί πελάτων που ασφαλίζονται")
-    cat_mean_month_com = px.bar(client_dis_count.sort_values('count'), y='District', x='count', title='',
+    cat_mean_month_com = px.bar(client_dis_count.loc[client_dis_count['District']!='None'].sort_values('count'), y='District', x='count', title='',
                                 labels={'District': 'Νομός', 'count': 'Σύνολο Πελατών'},
                                 color_discrete_sequence=px.colors.sequential.Blugrn, text_auto=True, width=1000,
                                 height=500)
