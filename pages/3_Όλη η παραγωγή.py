@@ -55,7 +55,7 @@ IM_select = IM[
     ['N_Policy', 'Company', 'Category', 'Char', 'Started', 'Expired', 'District', 'Gross', 'Net', 'Commissions', 'id',
      'Platform']]
 
-All = pd.concat([ME, IM_select])
+All = pd.concat([ME, IM_select,ANY])
 All['District'].value_counts().reset_index().sort_values('District')
 All['Started'] = pd.to_datetime(All['Started'], dayfirst=True)
 All['Expired'] = pd.to_datetime(All['Expired'], dayfirst=True)
