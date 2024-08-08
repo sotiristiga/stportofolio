@@ -575,7 +575,7 @@ with tab4:
     discrict_data = All1.groupby(['id', 'District'])[['Gross', 'Net', 'Commissions']].sum().reset_index()
     discrict_data_total = All1.groupby(['District'])[['Gross', 'Net', 'Commissions']].sum().reset_index()
     discrictcount = discrict_data['District'].value_counts().reset_index().sort_values('count')
-    fig_barplot_reg = px.bar(discrictcount.loc[All1['District']!='None'], x='count', y='District', title='',
+    fig_barplot_reg = px.bar(discrictcount.loc[discrictcount['District']!='None'], x='count', y='District', title='',
                                  labels={'count': 'Αρ. Πελατών', 'District': 'Νομός'},
                                  color_discrete_sequence=px.colors.sequential.Blugrn,
                                  text_auto=True, width=1000, height=400)
