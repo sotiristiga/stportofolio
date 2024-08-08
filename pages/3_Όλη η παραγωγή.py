@@ -28,8 +28,12 @@ def metrics_customize(red, green, blue, iconname, sline, i):
 st.set_page_config(layout='wide', page_title="Όλη η παραγωγή")
 ME = pd.read_csv(f"https://raw.githubusercontent.com/sotiristiga/Tiganitas_Sotiris_portofolio/main/ME_2023_2024.csv")
 IM = pd.read_csv(f"https://raw.githubusercontent.com/sotiristiga/Tiganitas_Sotiris_portofolio/main/IM_2023_2024.csv")
+ANY = pd.read_csv(f"https://raw.githubusercontent.com/sotiristiga/Tiganitas_Sotiris_portofolio/main/ANY.csv")
+
 IM['Platform'] = "Insurance Market"
 ME['Platform'] = "Megabroker"
+ANY['Platform'] = "Interamerican"
+ANY['District']='None'
 ME['District'] = ME['District'].replace("ΑΙΤΩΛΟΑΚΑΡΝΑΝΙΑΣ", "ΑΙΤΩΛΟΑΚΑΡΝΑΝΙΑ")
 ME['District'] = ME['District'].replace("ΑΤΤΙΚΗ", "ΑΤΤΙΚΗΣ")
 ME['District'] = ME['District'].replace("ΚΑΛΛΙΘΕΑ", "ΑΤΤΙΚΗΣ")
@@ -570,7 +574,7 @@ with tab4:
     discrict_data = All1.groupby(['id', 'District'])[['Gross', 'Net', 'Commissions']].sum().reset_index()
     discrict_data_total = All1.groupby(['District'])[['Gross', 'Net', 'Commissions']].sum().reset_index()
     discrictcount = discrict_data['District'].value_counts().reset_index().sort_values('count')
-    fig_barplot_reg = px.bar(discrictcount, x='count', y='District', title='',
+    fig_barplot_reg = px.bar(discrictcount.loc[All1['District']!='None'], x='count', y='District', title='',
                                  labels={'count': 'Αρ. Πελατών', 'District': 'Νομός'},
                                  color_discrete_sequence=px.colors.sequential.Blugrn,
                                  text_auto=True, width=1000, height=400)
