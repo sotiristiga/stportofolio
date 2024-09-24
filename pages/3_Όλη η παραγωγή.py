@@ -75,7 +75,7 @@ All['Month'] = pd.Categorical(All['Month'], categories=month_levels)
 
 All['Month_Year'] = All["Started"].dt.strftime('%m-%Y')
 All['Month_num'] = All['Expired'].dt.month
-
+All['Year_exp'] = All['Expired'].dt.year
 All['Month_Year_exp'] = All["Expired"].dt.strftime('%m-%Y')
 
 def duration_groups(duration):
