@@ -74,7 +74,8 @@ All['Month'] = All['Started'].dt.month_name()
 All['Month'] = pd.Categorical(All['Month'], categories=month_levels)
 
 All['Month_Year'] = All["Started"].dt.strftime('%m-%Y')
-
+All['Month_Year'] = All["Started"].dt.strftime('%m-%Y')
+All['Month_Year_exp'] = All["Expired"].dt.strftime('%m-%Y')
 
 def duration_groups(duration):
     if duration == 1:
@@ -174,8 +175,8 @@ with pie4:
     pie4.update_layout(plot_bgcolor='white', font_size=20, showlegend=False, title_x=0.1, title_y=0.8)
     st.write(pie4)
 
-tab1, tab2, tab3, tab4, tab5 = st.tabs(
-    ["Παραγωγή ανά εταιρεια", "Παραγωγή ανά κλάδο", "Εξέλιξη Παραγωγής", "Δημογραφικά Πελατών", 'Διάρκειες Συμβολαίων'])
+tab1, tab2, tab3, tab4, tab5,tab6 = st.tabs(
+    ["Παραγωγή ανά εταιρεια", "Παραγωγή ανά κλάδο", "Εξέλιξη Παραγωγής", "Δημογραφικά Πελατών", 'Διάρκειες Συμβολαίων','Συμβόλαια που λήγουν'])
 with tab1:
     tab11, tab12, tab13, tab14 = st.tabs(
         ["Σύνολο Συμβολαίων", "Καθαρά", "Προμήθειες", "Ανά εταιρεία σε κάθε πλατφόρμα"])
@@ -668,3 +669,17 @@ with tab5:
                               width=2000, height=1000, markers=True)
         fig_dur_bar.update_layout(plot_bgcolor='white', font_size=15)
         st.write(fig_dur_bar)
+with tab6:
+    next_months=pd.concat([All1.loc[(All1.Month_num > 9) & (All1.Year_exp > 2023) & (All1.Category.isin([ "ΑΥΤΟΚΙΝΗΤΩΝ",'ΖΩΗΣ','ΠΥΡΟΣ']) )],All1.loc[(All1.Year_exp > 2024)& (All1.Category.isin([ "ΑΥΤΟΚΙΝΗΤΩΝ",'ΖΩΗΣ','ΠΥΡΟΣ']) )]])[['N_Policy','Month_Year_exp','Platform']].value_counts().reset_index()[['Month_Year_exp','Platform']].value_counts().reset_index().sort_values('Month_Year_exp')
+next_months['Month_Year_exp'] = pd.to_datetime(next_months['Month_Year_exp'], format='mixed')
+fig_line_plat_count_by_year = px.line(next_months.sort_values('Month_Year_exp'),
+                                                  x="Month_Year_exp", y="count", color='Platform',
+                                                  title='Σύνολο συμβολαίων ανά μήνα',
+                                                  color_discrete_sequence=px.colors.sequential.Aggrnyl,
+                                                  labels={'count': 'Σύνολο συμβολαίων', 'Month_Year_exp': 'Μήνας-Έτος',
+                                                          'Platform': 'Πλατφόρμα'}, markers=True)
+fig_line_plat_count_by_year.update_layout(plot_bgcolor='white', font_size=13)
+st.write(fig_line_plat_count_by_year)
+
+st.write(next_months)
+    
