@@ -682,5 +682,4 @@ fig_line_plat_count_by_year = px.line(next_months.sort_values('Month_Year_exp'),
 fig_line_plat_count_by_year.update_layout(plot_bgcolor='white', font_size=13)
 st.write(fig_line_plat_count_by_year)
 
-st.write(next_months)
     
